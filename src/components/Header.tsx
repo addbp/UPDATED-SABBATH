@@ -17,7 +17,6 @@ const menuItems = [
     title: 'Our Offerings',
     subItems: [
       { title: 'Massages & Reflexology', path: '/offerings/massages' },
-      { title: 'Body Scrubs & Treatments', path: '/offerings/body-scrubs' },
       { title: 'Le Nail Salon', path: '/offerings/nail-salon' },
       { title: 'Wellness Suites & Packages', path: '/offerings/wellness-suites' },
       { title: 'Memberships & Gatherings', path: '/offerings/memberships' },
@@ -29,13 +28,17 @@ const menuItems = [
       { title: 'Ramyeon Noodle Bar', path: '/sabasu/ramyeon' },
       { title: 'Coffee, Tea & Refreshments', path: '/sabasu/coffee-tea' },
       { title: 'Hearty Meals', path: '/sabasu/hearty-meals' },
-      { title: 'Light Bites & Sweets', path: '/sabasu/light-bites' },
+      { title: 'Light Bites & Snacks', path: '/sabasu/light-bites' },
     ],
   },
-  { title: 'Contact', path: '/contact' },
+  { title: 'Contact', action: 'contact' },
 ];
 
-export default function Header() {
+interface HeaderProps {
+  onContactClick: () => void;
+}
+
+export default function Header({ onContactClick }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -130,13 +133,13 @@ export default function Header() {
         </div>
 
         <div className="flex items-center justify-end pointer-events-auto w-1/3">
-          <Link 
-            to="/contact" 
-            className="relative px-8 py-3.5 bg-[#C58F3B] text-white rounded-full text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-medium overflow-hidden group transition-all duration-500 hover:shadow-[0_8px_20px_rgba(197,143,59,0.4)] hover:-translate-y-0.5 border border-white/20"
+          <button 
+            onClick={onContactClick}
+            className="relative px-8 py-3.5 bg-[#A86A3D] text-white rounded-full text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-medium overflow-hidden group transition-all duration-500 hover:shadow-[0_8px_20px_rgba(168,106,61,0.4)] hover:-translate-y-0.5 border border-white/20"
           >
             <span className="absolute top-0 left-0 w-[150%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out skew-x-12"></span>
             <span className="relative z-10 transition-colors duration-500 drop-shadow-sm">Book Now</span>
-          </Link>
+          </button>
         </div>
       </motion.header>
 
@@ -156,7 +159,9 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed top-0 left-0 bottom-0 w-full md:w-[450px] bg-accent z-[70] overflow-y-auto border-r border-primary/20 text-primary"
+              className="fixed top-0 left-0 bottom-0 w-full md:w-[450px] bg-accent z-[70] overflow-y-auto border-r border-primary/20 text-primary premium-scrollbar"
+              data-lenis-prevent="true"
+              style={{ WebkitOverflowScrolling: 'touch' }}
             >
               <div className="p-6 md:p-10 flex flex-col min-h-full">
                 <div className="flex justify-between items-center mb-16">
@@ -198,6 +203,16 @@ export default function Header() {
                         >
                           {item.title}
                         </Link>
+                      ) : item.action === 'contact' ? (
+                        <button 
+                          onClick={() => {
+                            setIsOpen(false);
+                            onContactClick();
+                          }}
+                          className="font-serif text-3xl md:text-4xl font-light hover:opacity-70 transition-opacity text-left"
+                        >
+                          {item.title}
+                        </button>
                       ) : (
                         <button 
                           onClick={() => toggleMenu(item.title)}

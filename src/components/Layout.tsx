@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import Header from './Header';
+import ContactPanel from './ContactPanel';
 import Lenis from 'lenis';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function Layout() {
   const { pathname } = useLocation();
   const [activeFooterMenu, setActiveFooterMenu] = useState<string | null>(null);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
 
   const toggleFooterMenu = (menu: string) => {
@@ -23,12 +25,11 @@ export default function Layout() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.07,
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.8,
+      wheelMultiplier: 1,
       touchMultiplier: 2,
     });
     lenisRef.current = lenis;
@@ -49,9 +50,25 @@ export default function Layout() {
     };
   }, [pathname]);
 
+  useEffect(() => {
+    if (isContactOpen) {
+      document.body.style.overflow = 'hidden';
+      lenisRef.current?.stop();
+    } else {
+      document.body.style.overflow = '';
+      lenisRef.current?.start();
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      lenisRef.current?.start();
+    };
+  }, [isContactOpen]);
+
   return (
     <>
-      <Header />
+      <Header onContactClick={() => setIsContactOpen(true)} />
+      <ContactPanel isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
       <Outlet />
       
       {/* SECTION 5: FOOTER */}
@@ -89,7 +106,7 @@ export default function Layout() {
                         <Link to="/about/story" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Our Story</Link>
                         <Link to="/about/gallery" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Spa Gallery</Link>
                         <Link to="/about/policies" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Policies</Link>
-                        <Link to="/contact" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Contact</Link>
+                        <button onClick={() => setIsContactOpen(true)} className="text-left opacity-50 hover:opacity-100 transition-opacity duration-300 uppercase">Contact</button>
                       </div>
                     </motion.div>
                   )}
@@ -116,7 +133,6 @@ export default function Layout() {
                     >
                       <div className="flex flex-col gap-4 pb-8 pt-2 pl-4 text-[10px] tracking-[0.2em] uppercase font-medium">
                         <Link to="/offerings/massages" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Massages & Reflexology</Link>
-                        <Link to="/offerings/body-scrubs" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Body Scrubs & Treatments</Link>
                         <Link to="/offerings/nail-salon" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Le Nail Salon</Link>
                         <Link to="/offerings/wellness-suites" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Wellness Suites & Packages</Link>
                         <Link to="/offerings/memberships" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Memberships & Gatherings</Link>
@@ -148,7 +164,7 @@ export default function Layout() {
                         <Link to="/sabasu/ramyeon" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Ramyeon Noodle Bar</Link>
                         <Link to="/sabasu/coffee-tea" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Coffee, Tea & Refreshments</Link>
                         <Link to="/sabasu/hearty-meals" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Hearty Meals</Link>
-                        <Link to="/sabasu/light-bites" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Light Bites & Sweets</Link>
+                        <Link to="/sabasu/light-bites" className="opacity-50 hover:opacity-100 transition-opacity duration-300">Light Bites & Snacks</Link>
                       </div>
                     </motion.div>
                   )}

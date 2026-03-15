@@ -4,12 +4,36 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
-  --color-primary: #C58F3B;
-  --color-secondary: #C3833A;
+  --color-primary: #A86A3D;
+  --color-secondary: #9E5B32;
   --color-accent: #F3E9E0;
-  --color-text: #C58F3B;
+  --color-text: #A86A3D;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Premium Custom Scrollbar */
+.premium-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.premium-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.premium-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(168, 106, 61, 0.2);
+  border-radius: 10px;
+}
+
+.premium-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(168, 106, 61, 0.5);
+}
+
+/* Firefox support */
+.premium-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(168, 106, 61, 0.2) transparent;
 }

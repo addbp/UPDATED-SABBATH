@@ -65,13 +65,13 @@ export default function SpaGallery() {
 
   return (
     <div 
-      className="bg-[#1b3b2b] text-[#C58F3B] min-h-screen selection:bg-[#C58F3B] selection:text-[#1b3b2b] md:cursor-none"
+      className="bg-[#C3833A] text-[#F3E9E0] min-h-screen selection:bg-[#F3E9E0] selection:text-[#C3833A] md:cursor-none"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       {/* Custom Cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-16 h-16 rounded-full border border-[#C58F3B]/40 pointer-events-none z-[100] flex items-center justify-center hidden md:flex"
+        className="fixed top-0 left-0 w-16 h-16 rounded-full border border-[#F3E9E0]/40 pointer-events-none z-[100] flex items-center justify-center hidden md:flex"
         animate={{
           x: mousePosition.x - 32,
           y: mousePosition.y - 32,
@@ -80,7 +80,7 @@ export default function SpaGallery() {
         }}
         transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
       >
-        <Plus className="w-5 h-5 text-[#C58F3B] opacity-70" />
+        <Plus className="w-5 h-5 text-[#F3E9E0] opacity-70" />
       </motion.div>
 
       <div ref={targetRef} className="h-[400vh] relative">
@@ -93,7 +93,7 @@ export default function SpaGallery() {
               return (
                 <div key={item.id} className="relative flex items-center w-[85vw] md:w-[70vw] flex-shrink-0 mr-[15vw] md:mr-[20vw] last:mr-0">
                   {/* Text */}
-                  <h2 className="absolute left-[-5vw] md:left-[-12vw] top-1/2 -translate-y-1/2 font-serif text-[22vw] md:text-[14vw] leading-none z-10 text-[#C58F3B] pointer-events-none drop-shadow-xl font-light tracking-tight">
+                  <h2 className="absolute left-[-5vw] md:left-[-12vw] top-1/2 -translate-y-1/2 font-serif text-[22vw] md:text-[14vw] leading-none z-10 text-[#F3E9E0] pointer-events-none drop-shadow-xl font-light tracking-tight">
                     {item.title}
                   </h2>
                   
@@ -109,7 +109,7 @@ export default function SpaGallery() {
                       className="absolute inset-0 w-full h-full object-cover will-change-transform"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-accent/10 pointer-events-none transition-colors duration-500 hover:bg-accent/0"></div>
+                    <div className="absolute inset-0 bg-[#C3833A]/10 pointer-events-none transition-colors duration-500 hover:bg-[#C3833A]/0"></div>
                   </div>
                 </div>
               );
@@ -126,11 +126,11 @@ export default function SpaGallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-accent/90 backdrop-blur-md p-4 md:p-10 cursor-auto"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-[#C3833A]/90 backdrop-blur-md p-4 md:p-10 cursor-auto"
             onClick={() => setSelectedImage(null)}
           >
             <button 
-              className="absolute top-6 right-6 md:top-10 md:right-10 text-primary/70 hover:text-primary transition-colors z-10"
+              className="absolute top-6 right-6 md:top-10 md:right-10 text-[#F3E9E0]/70 hover:text-[#F3E9E0] transition-colors z-10"
               onClick={() => setSelectedImage(null)}
             >
               <X className="w-8 h-8 md:w-10 md:h-10" />
@@ -150,7 +150,7 @@ export default function SpaGallery() {
                 className="w-full h-full max-h-[80vh] object-contain drop-shadow-2xl"
                 referrerPolicy="no-referrer"
               />
-              <p className="text-primary/90 mt-6 font-serif text-2xl md:text-3xl tracking-[0.2em] uppercase font-light">
+              <p className="text-[#F3E9E0]/90 mt-6 font-serif text-2xl md:text-3xl tracking-[0.2em] uppercase font-light">
                 {selectedImage.title}
               </p>
             </motion.div>
